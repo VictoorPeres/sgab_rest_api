@@ -1,30 +1,20 @@
-package br.com.atom.sgab_rest_api.model.entity;
+package br.com.atom.sgab_rest_api.model.dto;
 
-
-import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "tb_cliente")
-public class Cliente implements Serializable {
+public class ClienteDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cliente")
     private Long id;
-    @Column(name="nm_cliente", nullable = false)
     private String nome;
-    @Column(name="cpf", nullable = false)
     private String cpf;
     private String email;
-    @Column(name="nr_telefone", nullable = false)
     private String telefone;
 
-    public Cliente() {}
+    public ClienteDTO() {}
 
     public Long getId() {
         return id;
@@ -69,7 +59,7 @@ public class Cliente implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Cliente cliente)) return false;
+        if (!(o instanceof ClienteDTO cliente)) return false;
         return Objects.equals(id, cliente.id) && Objects.equals(nome, cliente.nome) && Objects.equals(cpf, cliente.cpf) && Objects.equals(email, cliente.email) && Objects.equals(telefone, cliente.telefone);
     }
 

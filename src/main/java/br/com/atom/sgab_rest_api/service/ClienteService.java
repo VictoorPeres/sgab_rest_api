@@ -1,6 +1,10 @@
 package br.com.atom.sgab_rest_api.service;
 
+import static br.com.atom.sgab_rest_api.mapper.ObjectMapper.parseObject;
+import static br.com.atom.sgab_rest_api.mapper.ObjectMapper.parseListObjects;
+
 import br.com.atom.sgab_rest_api.model.entity.Cliente;
+import br.com.atom.sgab_rest_api.model.dto.ClienteDTO;
 import br.com.atom.sgab_rest_api.model.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,39 +17,46 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public Cliente create(Cliente cliente) {
-        return clienteRepository.save(cliente);
+    public ClienteDTO create(ClienteDTO cliente) {
+        var entity = parseObject(cliente, Cliente.class);
+        return parseObject(clienteRepository.save(entity), ClienteDTO.class);
     }
 
-    public Cliente update(Cliente cliente) {
-        Cliente c = findById(cliente.getId());
-        if(c != null){
-            return clienteRepository.save(cliente);
+    public ClienteDTO update(ClienteDTO cliente) {
+        var entity = parseObject(findById(cliente.getId()), Cliente.class);
+        if(entity != null){
+            return parseObject(clienteRepository.save(entity), ClienteDTO.class);
         }
         return null;
     }
 
     public void delete(Long id) {
-        Cliente cliente = findById(id);
+        ClienteDTO cliente = findById(id);
         if(cliente != null){
-            clienteRepository.delete(cliente);
+            var entity = parseObject(cliente, Cliente.class);
+            clienteRepository.delete(entity);
         }
     }
 
-    public Cliente findById(Long id) {
-        return clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente not found"));
+    public ClienteDTO findById(Long id) {
+
+        var entity =  clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente not found"));
+        return parseObject(entity, ClienteDTO.class);
     }
 
-    public Cliente findByCpf(String cpf) {
-        return clienteRepository.findByCpf(cpf);
+    public ClienteDTO findByCpf(String cpf) {
+        var entity = clienteRepository.findByCpf(cpf);
+        return parseObject(entity, ClienteDTO.class);
     }
 
-    public List<Cliente> findByFiltro(String filtro) {
-        return clienteRepository.findByFiltro(filtro);
+    public List<ClienteDTO> findByFiltro(String filtro) {
+        var entity = clienteRepository.findByFiltro(filtro);
+        return parseListObjects(entity, ClienteDTO.class);
     }
 
-    public List<Cliente> findAll() {
-        return clienteRepository.findAll();
+    public List<ClienteDTO> findAll() {
+        var entity = clienteRepository.findAll();
+        return parseListObjects(entity, ClienteDTO.class);
     }
 
 }
