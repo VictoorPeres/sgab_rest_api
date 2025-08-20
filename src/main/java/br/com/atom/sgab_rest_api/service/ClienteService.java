@@ -20,6 +20,9 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
 
     public ClienteResponseDTO create(ClienteRequestDTO cliente) {
+        if(clienteRepository.findByCpf(cliente.getCpf()) != null) {
+            throw new BusinessRuleException("Já existe um cliente cadastrado com o CPF informado.");
+        }
         var entity = parseObject(cliente, Cliente.class);
         return parseObject(clienteRepository.save(entity), ClienteResponseDTO.class);
     }
