@@ -25,8 +25,8 @@ public class Produto implements Serializable {
     private String descricao;
     @Column(name="ds_categoria", nullable = false)
     private String categoria;
-    @Column(name="ds_subcategoria", nullable = false)
-    private String subcategoria;
+    @Column(name="ds_segmento", nullable = false)
+    private String segmento;
     @Column(name="ds_marca", nullable = false)
     private String marca;
     @Column(name="ds_modelo", nullable = false)
@@ -84,12 +84,12 @@ public class Produto implements Serializable {
         this.categoria = categoria;
     }
 
-    public String getSubcategoria() {
-        return subcategoria;
+    public String getSegmento() {
+        return segmento;
     }
 
-    public void setSubcategoria(String subcategoria) {
-        this.subcategoria = subcategoria;
+    public void setSegmento(String segmento) {
+        this.segmento = segmento;
     }
 
     public String getMarca() {
@@ -168,11 +168,11 @@ public class Produto implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Produto produto)) return false;
-        return Objects.equals(id, produto.id) && Objects.equals(codigoBarras, produto.codigoBarras) && Objects.equals(codigoFabricante, produto.codigoFabricante) && Objects.equals(descricao, produto.descricao) && Objects.equals(categoria, produto.categoria) && Objects.equals(subcategoria, produto.subcategoria) && Objects.equals(marca, produto.marca) && Objects.equals(modelo, produto.modelo) && Objects.equals(valorCusto, produto.valorCusto) && Objects.equals(valorVenda, produto.valorVenda) && Objects.equals(peso, produto.peso) && Objects.equals(altura, produto.altura) && Objects.equals(largura, produto.largura) && Objects.equals(profundidade, produto.profundidade) && Objects.equals(observacoes, produto.observacoes);
+        return Objects.equals(id, produto.id) && Objects.equals(codigoBarras, produto.codigoBarras) && Objects.equals(codigoFabricante, produto.codigoFabricante) && Objects.equals(descricao, produto.descricao) && Objects.equals(categoria, produto.categoria) && Objects.equals(segmento, produto.segmento) && Objects.equals(marca, produto.marca) && Objects.equals(modelo, produto.modelo) && Objects.equals(valorCusto, produto.valorCusto) && Objects.equals(valorVenda, produto.valorVenda) && Objects.equals(peso, produto.peso) && Objects.equals(altura, produto.altura) && Objects.equals(largura, produto.largura) && Objects.equals(profundidade, produto.profundidade) && Objects.equals(observacoes, produto.observacoes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, codigoBarras, codigoFabricante, descricao, categoria, subcategoria, marca, modelo, valorCusto, valorVenda, peso, altura, largura, profundidade, observacoes);
+        return Objects.hash(id, codigoBarras, codigoFabricante, descricao, categoria, segmento, marca, modelo, valorCusto, valorVenda, peso, altura, largura, profundidade, observacoes);
     }
 }
