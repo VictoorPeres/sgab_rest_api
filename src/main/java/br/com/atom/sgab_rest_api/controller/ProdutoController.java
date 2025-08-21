@@ -1,5 +1,6 @@
 package br.com.atom.sgab_rest_api.controller;
 
+import br.com.atom.sgab_rest_api.model.dto.ProdutoCreateDTO;
 import br.com.atom.sgab_rest_api.model.dto.ProdutoDTO;
 import br.com.atom.sgab_rest_api.model.entity.Produto;
 import br.com.atom.sgab_rest_api.service.ProdutoService;
@@ -32,7 +33,7 @@ public class ProdutoController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ProdutoDTO create(@RequestBody Produto produtoRequest) {
+    public ProdutoCreateDTO create(@RequestBody Produto produtoRequest) {
         return produtoService.create(produtoRequest);
     }
 

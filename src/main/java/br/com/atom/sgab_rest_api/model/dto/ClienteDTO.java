@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ClienteRequestDTO implements Serializable {
+public class ClienteDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +23,7 @@ public class ClienteRequestDTO implements Serializable {
     @NotBlank(message = "O campo TELEFONE não pode ser vazio")
     private String telefone;
 
-    public ClienteRequestDTO() {}
+    public ClienteDTO() {}
 
     public Long getId() {
         return id;
@@ -68,12 +68,23 @@ public class ClienteRequestDTO implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ClienteRequestDTO cliente)) return false;
+        if (!(o instanceof ClienteDTO cliente)) return false;
         return Objects.equals(id, cliente.id) && Objects.equals(nome, cliente.nome) && Objects.equals(cpf, cliente.cpf) && Objects.equals(email, cliente.email) && Objects.equals(telefone, cliente.telefone);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, nome, cpf, email, telefone);
+    }
+
+    @Override
+    public String toString() {
+        return "ClienteDTO{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
+                '}';
     }
 }

@@ -1,6 +1,7 @@
 package br.com.atom.sgab_rest_api.service;
 
 import br.com.atom.sgab_rest_api.exception.ResourceNotFoundException;
+import br.com.atom.sgab_rest_api.model.dto.ProdutoCreateDTO;
 import br.com.atom.sgab_rest_api.model.dto.ProdutoDTO;
 import br.com.atom.sgab_rest_api.model.entity.Produto;
 import br.com.atom.sgab_rest_api.model.repository.ProdutoRepository;
@@ -18,8 +19,8 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public ProdutoDTO create(Produto produto) {
-        return parseObject(produtoRepository.save(produto), ProdutoDTO.class);
+    public ProdutoCreateDTO create(Produto produto) {
+        return parseObject(produtoRepository.save(produto), ProdutoCreateDTO.class);
     }
 
     public ProdutoDTO update(Produto produtoRequest) {

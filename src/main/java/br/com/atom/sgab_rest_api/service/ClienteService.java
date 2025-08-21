@@ -4,9 +4,10 @@ import static br.com.atom.sgab_rest_api.mapper.ObjectMapper.parseObject;
 import static br.com.atom.sgab_rest_api.mapper.ObjectMapper.parseListObjects;
 
 import br.com.atom.sgab_rest_api.exception.BusinessRuleException;
-import br.com.atom.sgab_rest_api.model.dto.ClienteRequestDTO;
+import br.com.atom.sgab_rest_api.exception.ResourceNotFoundException;
+import br.com.atom.sgab_rest_api.model.dto.ClienteDTO;
 import br.com.atom.sgab_rest_api.model.entity.Cliente;
-import br.com.atom.sgab_rest_api.model.dto.ClienteResponseDTO;
+import br.com.atom.sgab_rest_api.model.dto.ClienteCreateDTO;
 import br.com.atom.sgab_rest_api.model.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,49 +20,53 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public ClienteResponseDTO create(ClienteRequestDTO cliente) {
+    public ClienteCreateDTO create(ClienteDTO cliente) {
         if(clienteRepository.findByCpf(cliente.getCpf()) != null) {
             throw new BusinessRuleException("Já existe um cliente cadastrado com o CPF informado.");
         }
         var entity = parseObject(cliente, Cliente.class);
-        return parseObject(clienteRepository.save(entity), ClienteResponseDTO.class);
+        return parseObject(clienteRepository.save(entity), ClienteCreateDTO.class);
     }
 
-    public ClienteResponseDTO update(ClienteRequestDTO cliente) {
-        var entity = parseObject(findById(cliente.getId()), Cliente.class);
-        if(entity != null){
-            return parseObject(clienteRepository.save(entity), ClienteResponseDTO.class);
-        }
-        return null;
+    public ClienteDTO update(ClienteDTO clienteRequestDTO) {
+
+        Cliente cliente = clienteRepository.findById(clienteRequestDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+        cliente.setNome(clienteRequestDTO.getNome());
+        cliente.setEmail(clienteRequestDTO.getEmail());
+        cliente.setTelefone(clienteRequestDTO.getTelefone());
+
+        return parseObject(clienteRepository.save(cliente), ClienteDTO.class);
     }
 
     public void delete(Long id) {
-        ClienteResponseDTO cliente = findById(id);
-        if(cliente != null){
-            var entity = parseObject(cliente, Cliente.class);
+        var entity =  clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+        if(entity != null){
             clienteRepository.delete(entity);
         }
     }
 
-    public ClienteResponseDTO findById(Long id) {
+    public ClienteDTO findById(Long id) {
 
-        var entity =  clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente not found"));
-        return parseObject(entity, ClienteResponseDTO.class);
+        var entity =  clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+        return parseObject(entity, ClienteDTO.class);
     }
 
-    public ClienteResponseDTO findByCpf(String cpf) {
+    public ClienteDTO findByCpf(String cpf) {
         var entity = clienteRepository.findByCpf(cpf);
-        return parseObject(entity, ClienteResponseDTO.class);
+        if(entity == null) {
+            throw new ResourceNotFoundException("Cliente não encontrado");
+        }
+        return parseObject(entity, ClienteDTO.class);
     }
 
-    public List<ClienteResponseDTO> findByFiltro(String filtro) {
+    public List<ClienteDTO> findByFiltro(String filtro) {
         var entity = clienteRepository.findByFiltro(filtro);
-        return parseListObjects(entity, ClienteResponseDTO.class);
+        return parseListObjects(entity, ClienteDTO.class);
     }
 
-    public List<ClienteResponseDTO> findAll() {
+    public List<ClienteDTO> findAll() {
         var entity = clienteRepository.findAll();
-        return parseListObjects(entity, ClienteResponseDTO.class);
+        return parseListObjects(entity, ClienteDTO.class);
     }
 
 }

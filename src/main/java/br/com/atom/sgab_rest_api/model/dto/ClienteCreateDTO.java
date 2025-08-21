@@ -4,14 +4,14 @@ package br.com.atom.sgab_rest_api.model.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ClienteResponseDTO implements Serializable {
+public class ClienteCreateDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
     private String nome;
 
-    public ClienteResponseDTO() {}
+    public ClienteCreateDTO() {}
 
     public Long getId() {
         return id;
@@ -32,7 +32,7 @@ public class ClienteResponseDTO implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ClienteResponseDTO cliente)) return false;
+        if (!(o instanceof ClienteCreateDTO cliente)) return false;
         return Objects.equals(id, cliente.id) && Objects.equals(nome, cliente.nome);
     }
 
