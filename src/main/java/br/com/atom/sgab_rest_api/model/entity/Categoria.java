@@ -1,24 +1,22 @@
 package br.com.atom.sgab_rest_api.model.entity;
 
-import br.com.atom.sgab_rest_api.model.enums.Status;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_marca")
-public class Marca implements Serializable {
-     private static final long serialVersionUID = 1L;
+@Table(name = "tb_categoria")
+public class Categoria implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "ds_marca", nullable = false)
+
+    @Column(name="ds_categoria", nullable = false)
     private String descricao;
-    @Enumerated
-    @Column(name = "status", nullable = false)
-    private Status status;
 
     public Long getId() {
         return id;
@@ -36,24 +34,16 @@ public class Marca implements Serializable {
         this.descricao = descricao;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Marca marca = (Marca) o;
-        return Objects.equals(id, marca.id) && Objects.equals(descricao, marca.descricao) && status == marca.status;
+        Categoria categoria = (Categoria) o;
+        return Objects.equals(id, categoria.id) && Objects.equals(descricao, categoria.descricao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, descricao, status);
+        return Objects.hash(id, descricao);
     }
 }

@@ -1,7 +1,11 @@
 package br.com.atom.sgab_rest_api.model.dto;
 
+import br.com.atom.sgab_rest_api.model.enums.TipoCliente;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
@@ -22,6 +26,8 @@ public class ClienteDTO implements Serializable {
     private String email;
     @NotBlank(message = "O campo TELEFONE não pode ser vazio")
     private String telefone;
+    @NotNull(message = "O campo TIPO DE CLIENTE não pode ser vazio")
+    private TipoCliente tipoCliente;
 
     public ClienteDTO() {}
 
@@ -63,6 +69,14 @@ public class ClienteDTO implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public TipoCliente getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(TipoCliente tipoCliente) {
+        this.tipoCliente = tipoCliente;
     }
 
     @Override

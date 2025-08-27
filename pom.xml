@@ -60,6 +60,16 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-sqlserver</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>com.github.dozermapper</groupId>
 			<artifactId>dozer-core</artifactId>
 			<version>${dozer.version}</version>

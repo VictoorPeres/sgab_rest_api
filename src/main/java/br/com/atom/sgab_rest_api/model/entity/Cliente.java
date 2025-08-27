@@ -1,6 +1,7 @@
 package br.com.atom.sgab_rest_api.model.entity;
 
 
+import br.com.atom.sgab_rest_api.model.enums.TipoCliente;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,6 +24,9 @@ public class Cliente implements Serializable {
     private String email;
     @Column(name="nr_telefone", nullable = false)
     private String telefone;
+    @Enumerated
+    @Column(name = "tp_cliente", nullable = false)
+    private TipoCliente tipoCliente;
 
     public Cliente() {}
 
@@ -64,6 +68,14 @@ public class Cliente implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public TipoCliente getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(TipoCliente tipoCliente) {
+        this.tipoCliente = tipoCliente;
     }
 
     @Override

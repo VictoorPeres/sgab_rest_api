@@ -1,7 +1,9 @@
 package br.com.atom.sgab_rest_api.controller;
 
-import br.com.atom.sgab_rest_api.model.dto.MarcaDTO;
-import br.com.atom.sgab_rest_api.service.MarcaService;
+import br.com.atom.sgab_rest_api.model.dto.AcessoDTO;
+import br.com.atom.sgab_rest_api.model.entity.Acesso;
+import br.com.atom.sgab_rest_api.service.AcessoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,46 +12,45 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/marca")
-public class MarcaController {
+@RequestMapping("/acesso")
+public class AcessoController {
 
     @Autowired
-    private MarcaService marcaService;
+    private AcessoService acessoService;
 
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public MarcaDTO create (@RequestBody MarcaDTO marcaRequest){
-        return marcaService.create(marcaRequest);
+    public AcessoDTO create(@Valid @RequestBody Acesso acesso){
+        return acessoService.create(acesso);
     }
 
     @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public MarcaDTO update (@RequestBody MarcaDTO marcaRequest) {
-        return marcaService.update(marcaRequest);
+    public AcessoDTO update(@RequestBody Acesso acesso){
+        return acessoService.update(acesso);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<MarcaDTO> delete(@PathVariable("id") Long id) {
-        marcaService.delete(id);
+    public ResponseEntity<AcessoDTO> delete(@PathVariable("id") Long id){
+        acessoService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<MarcaDTO> findAll() {
-        return marcaService.findAll();
+    public List<AcessoDTO> findAll(){
+        return acessoService.findAll();
     }
 
     @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public MarcaDTO findById(@PathVariable Long id){
-        return marcaService.findById(id);
+    public AcessoDTO findById(@PathVariable("id") Long id){
+        return acessoService.findById(id);
     }
-
 }

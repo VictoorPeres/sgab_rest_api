@@ -7,7 +7,6 @@ import br.com.atom.sgab_rest_api.exception.BusinessRuleException;
 import br.com.atom.sgab_rest_api.exception.ResourceNotFoundException;
 import br.com.atom.sgab_rest_api.model.dto.ClienteDTO;
 import br.com.atom.sgab_rest_api.model.entity.Cliente;
-import br.com.atom.sgab_rest_api.model.dto.ClienteCreateDTO;
 import br.com.atom.sgab_rest_api.model.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +19,12 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public ClienteCreateDTO create(ClienteDTO cliente) {
+    public ClienteDTO create(ClienteDTO cliente) {
         if(clienteRepository.findByCpf(cliente.getCpf()) != null) {
             throw new BusinessRuleException("Já existe um cliente cadastrado com o CPF informado.");
         }
         var entity = parseObject(cliente, Cliente.class);
-        return parseObject(clienteRepository.save(entity), ClienteCreateDTO.class);
+        return parseObject(clienteRepository.save(entity), ClienteDTO.class);
     }
 
     public ClienteDTO update(ClienteDTO clienteRequestDTO) {
@@ -40,9 +39,15 @@ public class ClienteService {
 
     public void delete(Long id) {
         var entity =  clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
-        if(entity != null){
-            clienteRepository.delete(entity);
+        clienteRepository.delete(entity);
+    }
+
+    public List<ClienteDTO> findAll() {
+        var entity = clienteRepository.findAll();
+        if(entity.isEmpty()) {
+            throw new ResourceNotFoundException("Nenhum cliente encontrado.");
         }
+        return parseListObjects(entity, ClienteDTO.class);
     }
 
     public ClienteDTO findById(Long id) {
@@ -61,12 +66,9 @@ public class ClienteService {
 
     public List<ClienteDTO> findByFiltro(String filtro) {
         var entity = clienteRepository.findByFiltro(filtro);
+        if (entity.isEmpty()) {
+            throw new ResourceNotFoundException("Nenhum cliente encontrado para o filtro informado.");
+        }
         return parseListObjects(entity, ClienteDTO.class);
     }
-
-    public List<ClienteDTO> findAll() {
-        var entity = clienteRepository.findAll();
-        return parseListObjects(entity, ClienteDTO.class);
-    }
-
 }

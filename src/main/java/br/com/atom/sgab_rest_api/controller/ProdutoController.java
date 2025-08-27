@@ -1,6 +1,5 @@
 package br.com.atom.sgab_rest_api.controller;
 
-import br.com.atom.sgab_rest_api.model.dto.ProdutoCreateDTO;
 import br.com.atom.sgab_rest_api.model.dto.ProdutoDTO;
 import br.com.atom.sgab_rest_api.model.entity.Produto;
 import br.com.atom.sgab_rest_api.service.ProdutoService;
@@ -18,22 +17,11 @@ public class ProdutoController {
     @Autowired
     ProdutoService produtoService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ProdutoDTO> findAll(){
-        return produtoService.findAll();
-    }
-
-    @GetMapping(value = "/{id}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProdutoDTO findById(@PathVariable("id") Long id) {
-        return produtoService.findById(id);
-    }
-
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ProdutoCreateDTO create(@RequestBody Produto produtoRequest) {
+    public ProdutoDTO create(@RequestBody Produto produtoRequest) {
         return produtoService.create(produtoRequest);
     }
 
@@ -50,4 +38,16 @@ public class ProdutoController {
         produtoService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ProdutoDTO> findAll(){
+        return produtoService.findAll();
+    }
+
+    @GetMapping(value = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProdutoDTO findById(@PathVariable("id") Long id) {
+        return produtoService.findById(id);
+    }
+
 }
