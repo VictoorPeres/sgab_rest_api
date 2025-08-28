@@ -1,42 +1,33 @@
-package br.com.atom.sgab_rest_api.model.entity;
+package br.com.atom.sgab_rest_api.model.dto;
 
+import br.com.atom.sgab_rest_api.model.entity.DocumentoEntrada;
+import br.com.atom.sgab_rest_api.model.entity.Usuario;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Entity
-@Table(name = "tb_documento_saida")
-public class DocumentoSaida implements Serializable {
+public class DocumentoSaidaDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_documento_saida")
     private Long id;
 
-    @Column(name = "ds_documento_saida", nullable = false)
+    @NotBlank(message = "A descrição é obrigatória.")
     private String descricao;
 
-    @Column(name = "dt_acaoo", nullable = false)
     private String dataAcao;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "documento_entrada")
     private DocumentoEntrada documentoEntrada;
 
-    @Column(name = "nm_anexo")
     private String nomeAnexo;
 
-    @Column(name = "bi_anexo_")
     private byte[] anexo;
 
-    @Column(name = "ds_tipo_anexo")
     private String tipoAnexo;
 
     public Long getId() {
@@ -107,7 +98,7 @@ public class DocumentoSaida implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DocumentoSaida that = (DocumentoSaida) o;
+        DocumentoSaidaDTO that = (DocumentoSaidaDTO) o;
         return Objects.equals(id, that.id) && Objects.equals(descricao, that.descricao) && Objects.equals(dataAcao, that.dataAcao) && Objects.equals(usuario, that.usuario) && Objects.equals(documentoEntrada, that.documentoEntrada) && Objects.equals(nomeAnexo, that.nomeAnexo) && Objects.deepEquals(anexo, that.anexo) && Objects.equals(tipoAnexo, that.tipoAnexo);
     }
 

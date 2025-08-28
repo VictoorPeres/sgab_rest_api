@@ -13,6 +13,7 @@ public class ItemDocumentoEntrada implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_item")
     private Long id;
 
     @ManyToOne(optional = false)

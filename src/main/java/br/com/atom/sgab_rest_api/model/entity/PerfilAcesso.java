@@ -12,6 +12,7 @@ public class PerfilAcesso implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_perfil_acesso")
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)

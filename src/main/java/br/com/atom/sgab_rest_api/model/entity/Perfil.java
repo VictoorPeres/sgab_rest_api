@@ -13,6 +13,7 @@ public class Perfil implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_perfil")
     private Long id;
 
     @Column(name = "nm_perfil", nullable = false)

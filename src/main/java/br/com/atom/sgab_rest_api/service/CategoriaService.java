@@ -23,6 +23,10 @@ public class CategoriaService {
     }
 
     public CategoriaDTO update(Categoria categoria){
+        var entity = categoriaRepository.findById(categoria.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada."));
+        entity.setDescricao(categoria.getDescricao());
+        entity.setSecao(categoria.getSecao());
         return parseObject((categoriaRepository.save(categoria)), CategoriaDTO.class);
     }
 

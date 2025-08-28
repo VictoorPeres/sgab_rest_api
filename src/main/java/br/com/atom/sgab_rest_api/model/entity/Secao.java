@@ -6,22 +6,22 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_categoria")
-public class Categoria implements Serializable {
+@Table(name = "tb_secao")
+public class Secao implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_categoria")
+    @Column(name = "id_secao")
     private Long id;
 
-    @Column(name="ds_categoria", nullable = false)
+    @Column(name="ds_secao", nullable = false)
     private String descricao;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_secao", nullable = false)
-    private Secao secao;
+    @JoinColumn(name = "id_departamento", nullable = false)
+    private Departamento departamento;
 
     public Long getId() {
         return id;
@@ -39,24 +39,24 @@ public class Categoria implements Serializable {
         this.descricao = descricao;
     }
 
-    public Secao getSecao() {
-        return secao;
+    public Departamento getDepartamento() {
+        return departamento;
     }
 
-    public void setSecao(Secao secao) {
-        this.secao = secao;
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Categoria categoria = (Categoria) o;
-        return Objects.equals(getId(), categoria.getId()) && Objects.equals(getDescricao(), categoria.getDescricao()) && Objects.equals(getSecao(), categoria.getSecao());
+        Secao secao = (Secao) o;
+        return Objects.equals(id, secao.id) && Objects.equals(descricao, secao.descricao) && Objects.equals(departamento, secao.departamento);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDescricao(), getSecao());
+        return Objects.hash(id, descricao, departamento);
     }
 }

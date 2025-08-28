@@ -12,6 +12,7 @@ public class Acesso implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_acesso")
     private Long id;
 
     @Column(name="nm_acesso", nullable = false)

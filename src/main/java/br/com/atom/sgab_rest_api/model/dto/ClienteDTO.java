@@ -16,17 +16,17 @@ public class ClienteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    @NotBlank(message = "O campo NOME não pode ser vazio")
+    @NotBlank(message = "O campo nome é obrigatório")
     private String nome;
-    @NotBlank(message = "O campo CPF não pode ser vazio")
-    @Size(min = 11, max = 11, message = "CPF deve ter 11 dígitos")
+    @NotBlank(message = "O cpf é obrigatório")
+    @Size(min = 11, max = 11, message = "O cpf deve ter 11 dígitos")
     private String cpf;
-    @NotBlank(message = "O campo EMAIL não pode ser vazio")
-    @Email(message = "Email inválido")
+    @NotBlank(message = "O email é obrigatório")
+    @Email(message = "Digite um e-mail inválido")
     private String email;
-    @NotBlank(message = "O campo TELEFONE não pode ser vazio")
+    @NotBlank(message = "O telefone é obrigatório")
     private String telefone;
-    @NotNull(message = "O campo TIPO DE CLIENTE não pode ser vazio")
+    @NotNull(message = "Selecione o tipo do cliente")
     private TipoCliente tipoCliente;
 
     public ClienteDTO() {}

@@ -13,6 +13,7 @@ public class Marca implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_marca")
     private Long id;
     @Column(name = "ds_marca", nullable = false)
     private String descricao;

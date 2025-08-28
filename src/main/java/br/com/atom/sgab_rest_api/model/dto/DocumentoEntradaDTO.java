@@ -1,7 +1,10 @@
-package br.com.atom.sgab_rest_api.model.entity;
+package br.com.atom.sgab_rest_api.model.dto;
 
+import br.com.atom.sgab_rest_api.model.entity.*;
 import br.com.atom.sgab_rest_api.model.enums.StatusDocumentoEntrada;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,65 +12,48 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "tb_documento_entrada")
-public class DocumentoEntrada implements Serializable {
+public class DocumentoEntradaDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_documento_entrada")
     private Long id;
 
-    @OneToMany(mappedBy = "documentoEntrada", cascade = CascadeType.ALL, orphanRemoval = true)
+    @NotNull(message = "Informe o item que foi recebido")
     private List<ItemDocumentoEntrada> itens = new ArrayList<>();
 
-    @Column(name="ds_documento_entrada", nullable = false)
+    @NotBlank(message = "A descrição é obrigatória.")
     private String descricao;
 
-    @Column(name = "sn_produto_emprestado")
+    @NotBlank(message = "Selecione o item que foi emprestado")
     private String snProdutoEmprestado;
 
-    @Column(name = "nr_serie_emprestimo")
+    @NotBlank(message = "O número de série do item emprestado é obrigatório")
     private String nrSerieEmprestimo;
 
-    @Column(name = "dt_abertura", nullable = false)
     private String dtAbertura;
 
-    @Column(name = "dt_fechamento")
-    private String dtFechamento;
-
-    @Column(name = "dt_previsao_saida", nullable = false)
-    private String dtPrevisaoSaida;
-
     @Enumerated
-    @Column(name = "status_documento", nullable = false)
     private StatusDocumentoEntrada statusDocumento;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "id_produto_emprestado")
+    @NotNull(message = "Selecione um produto para empréstimo")
     private Produto produtoEmprestado;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_cliente")
+    @NotBlank(message = "A previsão de saída é obrigatória")
+    private String dtPrevisaoSaida;
+
     private Cliente cliente;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_empresa")
     private Empresa empresa;
 
-    @OneToMany(mappedBy = "documentoEntrada", fetch = FetchType.LAZY)
     private List<DocumentoSaida> documentoSaidaList = new ArrayList<>();
 
-    @Column(name = "bi_relatorio_sinistro")
     private byte[] relatorioSinistro;
 
-    @Column(name = "bi_relatorio_sinistro_resumo")
     private byte[] relatorioSinistroResumo;
+
+    private String dtFechamento;
+
 
     public Long getId() {
         return id;
@@ -77,35 +63,35 @@ public class DocumentoEntrada implements Serializable {
         this.id = id;
     }
 
-    public List<ItemDocumentoEntrada> getItens() {
+    public @NotNull(message = "Informe o item que foi recebido") List<ItemDocumentoEntrada> getItens() {
         return itens;
     }
 
-    public void setItens(List<ItemDocumentoEntrada> itens) {
+    public void setItens(@NotNull(message = "Informe o item que foi recebido") List<ItemDocumentoEntrada> itens) {
         this.itens = itens;
     }
 
-    public String getDescricao() {
+    public @NotBlank(message = "A descrição é obrigatória.") String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    public void setDescricao(@NotBlank(message = "A descrição é obrigatória.") String descricao) {
         this.descricao = descricao;
     }
 
-    public String getSnProdutoEmprestado() {
+    public @NotBlank(message = "Selecione o item que foi emprestado") String getSnProdutoEmprestado() {
         return snProdutoEmprestado;
     }
 
-    public void setSnProdutoEmprestado(String snProdutoEmprestado) {
+    public void setSnProdutoEmprestado(@NotBlank(message = "Selecione o item que foi emprestado") String snProdutoEmprestado) {
         this.snProdutoEmprestado = snProdutoEmprestado;
     }
 
-    public String getNrSerieEmprestimo() {
+    public @NotBlank(message = "O número de série do item emprestado é obrigatório") String getNrSerieEmprestimo() {
         return nrSerieEmprestimo;
     }
 
-    public void setNrSerieEmprestimo(String nrSerieEmprestimo) {
+    public void setNrSerieEmprestimo(@NotBlank(message = "O número de série do item emprestado é obrigatório") String nrSerieEmprestimo) {
         this.nrSerieEmprestimo = nrSerieEmprestimo;
     }
 
@@ -117,22 +103,6 @@ public class DocumentoEntrada implements Serializable {
         this.dtAbertura = dtAbertura;
     }
 
-    public String getDtFechamento() {
-        return dtFechamento;
-    }
-
-    public void setDtFechamento(String dtFechamento) {
-        this.dtFechamento = dtFechamento;
-    }
-
-    public String getDtPrevisaoSaida() {
-        return dtPrevisaoSaida;
-    }
-
-    public void setDtPrevisaoSaida(String dtPrevisaoSaida) {
-        this.dtPrevisaoSaida = dtPrevisaoSaida;
-    }
-
     public StatusDocumentoEntrada getStatusDocumento() {
         return statusDocumento;
     }
@@ -141,12 +111,20 @@ public class DocumentoEntrada implements Serializable {
         this.statusDocumento = statusDocumento;
     }
 
-    public Produto getProdutoEmprestado() {
+    public @NotNull(message = "Selecione um produto para empréstimo") Produto getProdutoEmprestado() {
         return produtoEmprestado;
     }
 
-    public void setProdutoEmprestado(Produto produtoEmprestado) {
+    public void setProdutoEmprestado(@NotNull(message = "Selecione um produto para empréstimo") Produto produtoEmprestado) {
         this.produtoEmprestado = produtoEmprestado;
+    }
+
+    public @NotBlank(message = "A previsão de saída é obrigatória") String getDtPrevisaoSaida() {
+        return dtPrevisaoSaida;
+    }
+
+    public void setDtPrevisaoSaida(@NotBlank(message = "A previsão de saída é obrigatória") String dtPrevisaoSaida) {
+        this.dtPrevisaoSaida = dtPrevisaoSaida;
     }
 
     public Cliente getCliente() {
@@ -197,11 +175,19 @@ public class DocumentoEntrada implements Serializable {
         this.relatorioSinistroResumo = relatorioSinistroResumo;
     }
 
+    public String getDtFechamento() {
+        return dtFechamento;
+    }
+
+    public void setDtFechamento(String dtFechamento) {
+        this.dtFechamento = dtFechamento;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DocumentoEntrada that = (DocumentoEntrada) o;
+        DocumentoEntradaDTO that = (DocumentoEntradaDTO) o;
         return Objects.equals(id, that.id) && Objects.equals(itens, that.itens) && Objects.equals(descricao, that.descricao) && Objects.equals(snProdutoEmprestado, that.snProdutoEmprestado) && Objects.equals(nrSerieEmprestimo, that.nrSerieEmprestimo) && Objects.equals(dtAbertura, that.dtAbertura) && Objects.equals(dtFechamento, that.dtFechamento) && Objects.equals(dtPrevisaoSaida, that.dtPrevisaoSaida) && statusDocumento == that.statusDocumento && Objects.equals(produtoEmprestado, that.produtoEmprestado) && Objects.equals(cliente, that.cliente) && Objects.equals(usuario, that.usuario) && Objects.equals(empresa, that.empresa) && Objects.equals(documentoSaidaList, that.documentoSaidaList) && Objects.deepEquals(relatorioSinistro, that.relatorioSinistro) && Objects.deepEquals(relatorioSinistroResumo, that.relatorioSinistroResumo);
     }
 

@@ -13,6 +13,7 @@ public class Empresa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_empresa")
     private Long id;
 
     @Column(name="nm_fantasia", nullable = false)

@@ -1,7 +1,11 @@
 package br.com.atom.sgab_rest_api.model.dto;
 
 
+import br.com.atom.sgab_rest_api.model.entity.Categoria;
+import br.com.atom.sgab_rest_api.model.entity.Marca;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,24 +15,21 @@ public class ProdutoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String codigoBarras;
-    private Long codigoFabricante;
-
+    @NotBlank(message = "A descrição é obrigatória.")
     private String descricao;
-    private String categoria;
-    private String segmento;
-    private String marca;
+    @NotBlank(message = "O modelo é obrigatório.")
     private String modelo;
-
-    private Double valorCusto;
-    private Double valorVenda;
-
+    @NotNull(message = "O peso é obrigatório.")
     private Double peso;
     private Double altura;
     private Double largura;
     private Double profundidade;
-
     private String observacoes;
+    @NotNull(message = "A categoria do produto é obrigatória.")
+    private Categoria categoriaProduto;
+    @NotNull(message = "A marca do produto é obrigatória.")
+    private Marca marca;
+
 
     public Long getId() {
         return id;
@@ -36,22 +37,6 @@ public class ProdutoDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCodigoBarras() {
-        return codigoBarras;
-    }
-
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
-    }
-
-    public Long getCodigoFabricante() {
-        return codigoFabricante;
-    }
-
-    public void setCodigoFabricante(Long codigoFabricante) {
-        this.codigoFabricante = codigoFabricante;
     }
 
     public String getDescricao() {
@@ -62,52 +47,12 @@ public class ProdutoDTO implements Serializable {
         this.descricao = descricao;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getSegmento() {
-        return segmento;
-    }
-
-    public void setSegmento(String segmento) {
-        this.segmento = segmento;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
     public String getModelo() {
         return modelo;
     }
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
-    }
-
-    public Double getValorCusto() {
-        return valorCusto;
-    }
-
-    public void setValorCusto(Double valorCusto) {
-        this.valorCusto = valorCusto;
-    }
-
-    public Double getValorVenda() {
-        return valorVenda;
-    }
-
-    public void setValorVenda(Double valorVenda) {
-        this.valorVenda = valorVenda;
     }
 
     public Double getPeso() {
@@ -150,36 +95,32 @@ public class ProdutoDTO implements Serializable {
         this.observacoes = observacoes;
     }
 
+    public Categoria getCategoriaProduto() {
+        return categoriaProduto;
+    }
+
+    public void setCategoriaProduto(Categoria categoriaProduto) {
+        this.categoriaProduto = categoriaProduto;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProdutoDTO produto)) return false;
-        return Objects.equals(id, produto.id) && Objects.equals(codigoBarras, produto.codigoBarras) && Objects.equals(codigoFabricante, produto.codigoFabricante) && Objects.equals(descricao, produto.descricao) && Objects.equals(categoria, produto.categoria) && Objects.equals(segmento, produto.segmento) && Objects.equals(marca, produto.marca) && Objects.equals(modelo, produto.modelo) && Objects.equals(valorCusto, produto.valorCusto) && Objects.equals(valorVenda, produto.valorVenda) && Objects.equals(peso, produto.peso) && Objects.equals(altura, produto.altura) && Objects.equals(largura, produto.largura) && Objects.equals(profundidade, produto.profundidade) && Objects.equals(observacoes, produto.observacoes);
+        if (o == null || getClass() != o.getClass()) return false;
+        ProdutoDTO that = (ProdutoDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(descricao, that.descricao) && Objects.equals(modelo, that.modelo) && Objects.equals(peso, that.peso) && Objects.equals(altura, that.altura) && Objects.equals(largura, that.largura) && Objects.equals(profundidade, that.profundidade) && Objects.equals(observacoes, that.observacoes) && Objects.equals(categoriaProduto, that.categoriaProduto) && Objects.equals(marca, that.marca);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, codigoBarras, codigoFabricante, descricao, categoria, segmento, marca, modelo, valorCusto, valorVenda, peso, altura, largura, profundidade, observacoes);
-    }
-
-    @Override
-    public String toString() {
-        return "ProdutoDTO{" +
-                "id=" + id +
-                ", codigoBarras='" + codigoBarras + '\'' +
-                ", codigoFabricante=" + codigoFabricante +
-                ", descricao='" + descricao + '\'' +
-                ", categoria='" + categoria + '\'' +
-                ", segmento='" + segmento + '\'' +
-                ", marca='" + marca + '\'' +
-                ", modelo='" + modelo + '\'' +
-                ", valorCusto=" + valorCusto +
-                ", valorVenda=" + valorVenda +
-                ", peso=" + peso +
-                ", altura=" + altura +
-                ", largura=" + largura +
-                ", profundidade=" + profundidade +
-                ", observacoes='" + observacoes + '\'' +
-                '}';
+        return Objects.hash(id, descricao, modelo, peso, altura, largura, profundidade, observacoes, categoriaProduto, marca);
     }
 }

@@ -2,6 +2,8 @@ package br.com.atom.sgab_rest_api.model.dto;
 
 import br.com.atom.sgab_rest_api.model.enums.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -10,7 +12,10 @@ public class MarcaDTO implements Serializable {
      private static final long serialVersionUID = 1L;
 
     private Long id;
+    @NotBlank(message = "A descrição é obrigatória.")
     private String descricao;
+    @Enumerated
+    @NotNull(message = "Selecione o STATUS do cadastro da marca")
     private Status status;
 
     public Long getId() {

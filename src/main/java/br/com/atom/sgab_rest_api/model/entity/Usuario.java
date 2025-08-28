@@ -13,6 +13,7 @@ public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
     private Long id;
 
     @Column(name="nm_usuario", nullable = false)
@@ -30,7 +31,7 @@ public class Usuario implements Serializable {
     @Column(name="password", nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated
     @Column(name = "status", nullable = false)
     private Status status;
 
