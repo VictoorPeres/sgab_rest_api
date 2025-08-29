@@ -1,14 +1,12 @@
 package br.com.atom.sgab_rest_api.model.dto;
 
-import br.com.atom.sgab_rest_api.model.entity.Departamento;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class SecaoDTO implements Serializable {
+public class SecaoRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,7 +15,7 @@ public class SecaoDTO implements Serializable {
     @NotBlank(message = "A descrição é obrigatória")
     private String descricao;
     @NotNull(message = "O departamento é obrigatório")
-    private DepartamentoDTO departamento;
+    private Long idDepartamento;
 
     public Long getId() {
         return id;
@@ -35,24 +33,24 @@ public class SecaoDTO implements Serializable {
         this.descricao = descricao;
     }
 
-    public DepartamentoDTO getDepartamento() {
-        return departamento;
+    public Long getIdDepartamento() {
+        return idDepartamento;
     }
 
-    public void setDepartamento(DepartamentoDTO departamento) {
-        this.departamento = departamento;
+    public void setIdDepartamento(Long idDepartamento) {
+        this.idDepartamento = idDepartamento;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SecaoDTO secao = (SecaoDTO) o;
-        return Objects.equals(id, secao.id) && Objects.equals(descricao, secao.descricao) && Objects.equals(departamento, secao.departamento);
+        SecaoRequestDTO that = (SecaoRequestDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(descricao, that.descricao) && Objects.equals(idDepartamento, that.idDepartamento);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, descricao, departamento);
+        return Objects.hash(id, descricao, idDepartamento);
     }
 }

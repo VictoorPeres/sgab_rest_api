@@ -1,7 +1,7 @@
 package br.com.atom.sgab_rest_api.controller;
 
+import br.com.atom.sgab_rest_api.model.dto.CategoriaRequestDTO;
 import br.com.atom.sgab_rest_api.model.dto.CategoriaDTO;
-import br.com.atom.sgab_rest_api.model.entity.Categoria;
 import br.com.atom.sgab_rest_api.service.CategoriaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categoria")
+@RequestMapping("/api/categoria/v1")
 public class CategoriaController {
 
     @Autowired
@@ -22,20 +22,20 @@ public class CategoriaController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public CategoriaDTO create(@Valid @RequestBody Categoria categoriaRequest) {
-        return categoriaService.create(categoriaRequest);
+    public CategoriaDTO create(@Valid @RequestBody CategoriaRequestDTO categoriaDTO) {
+        return categoriaService.create(categoriaDTO);
     }
 
     @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public CategoriaDTO update(@RequestBody Categoria categoriaRequest) {
-        return categoriaService.update(categoriaRequest);
+    public CategoriaDTO update(@Valid @RequestBody CategoriaRequestDTO categoriaDTO) {
+        return categoriaService.update(categoriaDTO);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<CategoriaDTO> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<CategoriaRequestDTO> delete(@PathVariable("id") Long id) {
         categoriaService.delete(id);
         return ResponseEntity.noContent().build();
     }

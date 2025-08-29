@@ -37,9 +37,6 @@ public class MarcaService implements Serializable {
 
     public List<MarcaDTO> findAll(){
         var entity = marcaRepository.findAll();
-        if(entity.isEmpty()) {
-            throw new ResourceNotFoundException("Nenhuma marca encontrada.");
-        }
         return ObjectMapper.parseListObjects(entity, MarcaDTO.class);
     }
 

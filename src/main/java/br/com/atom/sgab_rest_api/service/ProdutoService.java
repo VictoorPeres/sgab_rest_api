@@ -35,9 +35,6 @@ public class ProdutoService {
 
     public List<ProdutoDTO> findAll() {
         var entity = produtoRepository.findAll();
-        if(entity.isEmpty()) {
-            throw new ResourceNotFoundException("Nenhum produto encontrado.");
-        }
         return parseListObjects(entity, ProdutoDTO.class);
     }
 

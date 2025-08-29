@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/acesso")
+@RequestMapping("/api/acesso/v1")
 public class AcessoController {
 
     @Autowired
@@ -22,16 +22,16 @@ public class AcessoController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public AcessoDTO create(@Valid @RequestBody Acesso acesso){
-        return acessoService.create(acesso);
+    public AcessoDTO create(@Valid @RequestBody AcessoDTO acessoDTO){
+        return acessoService.create(acessoDTO);
     }
 
     @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public AcessoDTO update(@RequestBody Acesso acesso){
-        return acessoService.update(acesso);
+    public AcessoDTO update(@Valid @RequestBody AcessoDTO acessoDTO){
+        return acessoService.update(acessoDTO);
     }
 
     @DeleteMapping(value = "/{id}")

@@ -1,10 +1,7 @@
 package br.com.atom.sgab_rest_api.controller;
 
-import br.com.atom.sgab_rest_api.model.dto.CategoriaDTO;
 import br.com.atom.sgab_rest_api.model.dto.DepartamentoDTO;
-import br.com.atom.sgab_rest_api.model.entity.Categoria;
 import br.com.atom.sgab_rest_api.model.entity.Departamento;
-import br.com.atom.sgab_rest_api.service.CategoriaService;
 import br.com.atom.sgab_rest_api.service.DepartamentoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/departamento")
+@RequestMapping("/api/departamento/v1")
 public class DepartamentoController {
 
     @Autowired
@@ -25,16 +22,16 @@ public class DepartamentoController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public DepartamentoDTO create(@Valid @RequestBody Departamento departamentoRequest) {
-        return departamentoService.create(departamentoRequest);
+    public DepartamentoDTO create(@Valid @RequestBody DepartamentoDTO departamentoDTO) {
+        return departamentoService.create(departamentoDTO);
     }
 
     @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public DepartamentoDTO update(@RequestBody Departamento departamentoRequest) {
-        return departamentoService.update(departamentoRequest);
+    public DepartamentoDTO update(@Valid @RequestBody DepartamentoDTO departamentoDTO) {
+        return departamentoService.update(departamentoDTO);
     }
 
     @DeleteMapping(value = "/{id}")

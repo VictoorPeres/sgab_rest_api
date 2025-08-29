@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/api/cliente/v1")
 public class ClienteController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class ClienteController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ClienteDTO update(@RequestBody ClienteDTO clienteRequest) {
+    public ClienteDTO update(@Valid @RequestBody ClienteDTO clienteRequest) {
         return clienteService.update(clienteRequest);
     }
 

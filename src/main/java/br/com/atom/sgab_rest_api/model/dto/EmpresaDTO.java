@@ -1,42 +1,32 @@
-package br.com.atom.sgab_rest_api.model.entity;
+package br.com.atom.sgab_rest_api.model.dto;
 
+import br.com.atom.sgab_rest_api.model.entity.Empresa;
 import br.com.atom.sgab_rest_api.model.enums.TipoEmpresa;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "tb_empresa")
-public class Empresa implements Serializable {
+public class EmpresaDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_empresa")
     private Long id;
 
-    @Column(name="nm_fantasia", nullable = false)
+    @NotBlank(message = "O nome fantasia é obrigatório")
     private String nomeFantasia;
-
-    @Column(name="razao_social", nullable = false)
+    @NotBlank(message = "A razão social é obrigatória")
     private String razaoSocial;
-
-    @Column(name="cnpj", nullable = false)
+    @NotBlank(message = "O CNPJ é obrigatório")
     private String cnpj;
-
+    @NotBlank(message = "O email é obrigatório")
     private String email;
-
-    @Column(name="nr_telefone", nullable = false)
+    @NotBlank(message = "O telefone é obrigatório")
     private String telefone;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_distribuidora")
-    private Empresa distribuidora;
-
-    @Enumerated
-    @Column(name="tp_empresa", nullable = false)
+    @NotNull(message = "O tipo da empresa é obrigatório")
     private TipoEmpresa tipoEmpresa;
+    private EmpresaDTO distribuidora;
 
     public Long getId() {
         return id;
@@ -86,11 +76,11 @@ public class Empresa implements Serializable {
         this.telefone = telefone;
     }
 
-    public Empresa getDistribuidora() {
+    public EmpresaDTO getDistribuidora() {
         return distribuidora;
     }
 
-    public void setDistribuidora(Empresa distribuidora) {
+    public void setDistribuidora(EmpresaDTO distribuidora) {
         this.distribuidora = distribuidora;
     }
 
@@ -106,12 +96,12 @@ public class Empresa implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Empresa empresa = (Empresa) o;
-        return Objects.equals(id, empresa.id) && Objects.equals(nomeFantasia, empresa.nomeFantasia) && Objects.equals(razaoSocial, empresa.razaoSocial) && Objects.equals(cnpj, empresa.cnpj) && Objects.equals(email, empresa.email) && Objects.equals(telefone, empresa.telefone) && Objects.equals(distribuidora, empresa.distribuidora) && tipoEmpresa == empresa.tipoEmpresa;
+        EmpresaDTO that = (EmpresaDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(nomeFantasia, that.nomeFantasia) && Objects.equals(razaoSocial, that.razaoSocial) && Objects.equals(cnpj, that.cnpj) && Objects.equals(email, that.email) && Objects.equals(telefone, that.telefone) && tipoEmpresa == that.tipoEmpresa && Objects.equals(distribuidora, that.distribuidora);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nomeFantasia, razaoSocial, cnpj, email, telefone, distribuidora, tipoEmpresa);
+        return Objects.hash(id, nomeFantasia, razaoSocial, cnpj, email, telefone, tipoEmpresa, distribuidora);
     }
 }

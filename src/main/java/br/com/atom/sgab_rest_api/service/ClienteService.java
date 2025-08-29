@@ -44,9 +44,6 @@ public class ClienteService {
 
     public List<ClienteDTO> findAll() {
         var entity = clienteRepository.findAll();
-        if(entity.isEmpty()) {
-            throw new ResourceNotFoundException("Nenhum cliente encontrado.");
-        }
         return parseListObjects(entity, ClienteDTO.class);
     }
 

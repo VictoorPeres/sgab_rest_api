@@ -3,6 +3,7 @@ package br.com.atom.sgab_rest_api.service;
 import br.com.atom.sgab_rest_api.exception.ResourceNotFoundException;
 import br.com.atom.sgab_rest_api.model.dto.DepartamentoDTO;
 import br.com.atom.sgab_rest_api.model.dto.SecaoDTO;
+import br.com.atom.sgab_rest_api.model.dto.SecaoRequestDTO;
 import br.com.atom.sgab_rest_api.model.entity.Departamento;
 import br.com.atom.sgab_rest_api.model.entity.Secao;
 import br.com.atom.sgab_rest_api.model.repository.DepartamentoRepository;
@@ -20,16 +21,27 @@ public class SecaoService {
 
     @Autowired
     private SecaoRepository secaoRepository;
+    @Autowired
+    private DepartamentoRepository departamentoRepository;
 
-    public SecaoDTO create(Secao secao){
-        return parseObject(secaoRepository.save(secao), SecaoDTO.class);
+    public SecaoDTO create(SecaoRequestDTO secaoRequestDTO){
+        var entity = parseObject(secaoRequestDTO, Secao.class);
+        var departamento = departamentoRepository.findById(secaoRequestDTO.getIdDepartamento()).orElseThrow(() ->  new ResourceNotFoundException("Departamento não encontrado"));
+
+        entity.setDepartamento(departamento);
+        entity = secaoRepository.save(entity);
+        return parseObject(entity, SecaoDTO.class);
     }
 
-    public SecaoDTO update(Secao secao){
-        var entity = secaoRepository.findById(secao.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Seção não encontrada."));
-        entity.setDescricao(secao.getDescricao());
-        return parseObject((secaoRepository.save(secao)), SecaoDTO.class);
+    public SecaoDTO update(SecaoRequestDTO secaoRequestDTO){
+        var entity = secaoRepository.findById(secaoRequestDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("Seção não encontrada."));
+        var departamento = departamentoRepository.findById(secaoRequestDTO.getIdDepartamento()).orElseThrow(() ->  new ResourceNotFoundException("Departamento não encontrado"));
+
+        entity.setDescricao(secaoRequestDTO.getDescricao());
+        entity.setDepartamento(departamento);
+        entity = secaoRepository.save(entity);
+
+        return parseObject(entity, SecaoDTO.class);
     }
 
     public void delete(Long id){
@@ -39,9 +51,6 @@ public class SecaoService {
 
     public List<SecaoDTO> findAll() {
         var entity = secaoRepository.findAll();
-        if(entity.isEmpty()) {
-            throw new ResourceNotFoundException("Nenhuma seção encontrada.");
-        }
         return parseListObjects(entity, SecaoDTO.class);
     }
 

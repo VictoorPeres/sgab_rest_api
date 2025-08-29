@@ -2,6 +2,7 @@ package br.com.atom.sgab_rest_api.controller;
 
 import br.com.atom.sgab_rest_api.model.dto.DepartamentoDTO;
 import br.com.atom.sgab_rest_api.model.dto.SecaoDTO;
+import br.com.atom.sgab_rest_api.model.dto.SecaoRequestDTO;
 import br.com.atom.sgab_rest_api.model.entity.Departamento;
 import br.com.atom.sgab_rest_api.model.entity.Secao;
 import br.com.atom.sgab_rest_api.service.DepartamentoService;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/secao")
+@RequestMapping("/api/secao/v1")
 public class SecaoController {
 
     @Autowired
@@ -25,16 +26,16 @@ public class SecaoController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public SecaoDTO create(@Valid @RequestBody Secao secaoRequest) {
-        return secaoService.create(secaoRequest);
+    public SecaoDTO create(@Valid @RequestBody SecaoRequestDTO secaoRequestDTO) {
+        return secaoService.create(secaoRequestDTO);
     }
 
     @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public SecaoDTO update(@RequestBody Secao secaoRequest) {
-        return secaoService.update(secaoRequest);
+    public SecaoDTO update(@RequestBody SecaoRequestDTO secaoRequestDTO) {
+        return secaoService.update(secaoRequestDTO);
     }
 
     @DeleteMapping(value = "/{id}")

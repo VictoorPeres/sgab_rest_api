@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/marca")
+@RequestMapping("/api/marca/v1")
 public class MarcaController {
 
     @Autowired
